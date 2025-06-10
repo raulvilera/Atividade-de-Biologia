@@ -568,114 +568,47 @@
     <button id="submit-btn" onclick="submitForm()">Enviar Respostas</button>
     <div id="result"></div>
 
+    
     <script>
-        // Dados dos alunos por série
+        // Dados dos alunos
         const studentsData = {
-            '9A': [
-                {number: '1', name: 'ÁGATHA NIKOLLE DA SILVA RAMOS'},
-                {number: '2', name: 'AMANDA BEATRIZ LEAL MOURAD'},
-                {number: '4', name: 'ANNA NICOLY BENVINDO DOS SANTOS'},
-                {number: '5', name: 'ARTHUR DOS SANTOS'},
-                {number: '6', name: 'BEATRIZ UCHOA DOS SANTOS'},
-                {number: '7', name: 'BRUNO EDUARDO NOGUEIRA DE OLIVEIRA'},
-                {number: '8', name: 'CARLOS EDUARDO BELMIRO DOS SANTOS'},
-                {number: '9', name: 'CHRISTIAN DAVI DE OLIVEIRA'},
-                {number: '11', name: 'ERICK HENRIQUE RIBEIRO GONÇALVES'},
-                {number: '12', name: 'FILIPE RODRIGUES SANTOS'},
-                {number: '13', name: 'GABRIEL ALMEIDA MOSCARDINI'},
-                {number: '14', name: 'GIOVANA MOTA VAZ DE JESUS'},
-                {number: '15', name: 'GUILHERME DA SILVA GUIMARÃES'},
-                {number: '16', name: 'HELOÍSA LEAL DOS REIS'},
-                {number: '17', name: 'IAGO ANJOS DE JESUS'},
-                {number: '18', name: 'IGNACIO LINS SANTOS'},
-                {number: '19', name: 'ISADORA DE SOUZA SILVA'},
-                {number: '20', name: 'JOAO VICTOR BATISTA DUARTE'},
-                {number: '21', name: 'JULIANA SANTOS LIMA'},
-                {number: '25', name: 'MANUELA VITÓRIA LIMA DOS SANTOS'},
-                {number: '26', name: 'MIGUEL ALVES OLIVEIRA'},
-                {number: '27', name: 'NIKOLAS ANTONIO'},
-                {number: '28', name: 'ORIANA JOSE TUAREZ RENGEL'},
-                {number: '31', name: 'RAFAELLA VITÓRIA EXPEDITA DE ANDRADE MARQUES'},
-                {number: '33', name: 'RAYLAN DE JESUS BARBOSA'},
-                {number: '34', name: 'REBECA DOS SANTOS SOUSA'},
-                {number: '35', name: 'RICHARD JOSÉ DOS SANTOS'},
-                {number: '36', name: 'SARA CRISTINA PASSOS MARTINS'},
-                {number: '37', name: 'VANESSA CARDOSO DOS SANTOS'},
-                {number: '41', name: 'JULIA DIAS AZEVEDO'},
-                {number: '42', name: 'SAMARA HELEN DA SILVA'},
-                {number: '44', name: 'LUIS MATHEUS DA SILVA RAMOS'}
-            ],
-            '9B': [
-                {number: '1', name: 'ALEJANDRO VIEIRA LIMA'},
-                {number: '2', name: 'ALEX GUSTAVO DA SILVA VIEIRA'},
-                {number: '3', name: 'ALLAN BEZERRA DE LIMA'},
-                {number: '6', name: 'ARTHUR DE JESUS NASCIMENTO'},
-                {number: '8', name: 'ARTHUR MARYANO MENDES'},
-                {number: '9', name: 'CARLOS EDUARDO OLIVEIRA SABATERRA'},
-                {number: '10', name: 'DARYO PALMA GREGORIO'},
-                {number: '13', name: 'EDUARDA DE SOUSA OLIVEIRA'},
-                {number: '16', name: 'GIOVANNA MARTINEZ FERREIRA'},
-                {number: '17', name: 'GRAZIELLE VITÓRIA SILVA FIGUEIREDO'},
-                {number: '20', name: 'JULLIA OLIVEIRA DE SOUZA'},
-                {number: '21', name: 'KARINA DE JESUS SANTANA'},
-                {number: '24', name: 'LEONARDO JUNIOR ALBUQUERQUE DA SILVA'},
-                {number: '27', name: 'MARCOS DE OLIVEIRA CARVALHO'},
-                {number: '28', name: 'MARIA EDUARDA SILVA SOUZA'},
-                {number: '29', name: 'MOISES DOS SANTOS BOMFIM'},
-                {number: '30', name: 'NAHYMÊ VITORIA TAVARES DOS SANTOS'},
-                {number: '31', name: 'NICOLAS LUAN MENDES'},
-                {number: '32', name: 'PEDRO HENRIQUE ARRABAL MANZARO'},
-                {number: '33', name: 'PIETRO RAMON DE PAIVA MAGALHÃES LEITÃO'},
-                {number: '34', name: 'SOFIA DE FRANCA COSTA'},
-                {number: '35', name: 'TATIANA DA SILVA RODRIGUES'},
-                {number: '36', name: 'VITOR HUGO DOMINGOS SANTOS'},
-                {number: '37', name: 'WAGNER SILVA MEIRA'},
-                {number: '38', name: 'YASMIM ANDRADE DOS SANTOS'}
-            ],
-            '9C': [
-                {number: '2', name: 'ALEXANDRE SERAFIM JUNIOR'},
-                {number: '3', name: 'ANA LUIZA DO NASCIMENTO'},
-                {number: '5', name: 'ARTHUR EMANUEL ALMEIDA REIS'},
-                {number: '7', name: 'CARLOS AUGUSTO DIAS DE MENDONÇA'},
-                {number: '9', name: 'DAPHINE SINDIFER RODRIGUES SILVA'},
-                {number: '12', name: 'ELOISA DE OLIVEIRA CARVALHO'},
-                {number: '13', name: 'ENZO BAPTISTA MAIA'},
-                {number: '14', name: 'EVELLYN ANGELINA CAVALCANTE DE OLIVEIRA'},
-                {number: '16', name: 'GABRIEL VICTOR OLIVEIRA SANTOS'},
-                {number: '17', name: 'GIOVANNA SOUSA DA SILVA'},
-                {number: '18', name: 'GUSTAVO FURLAN GUEDES DA SILVA'},
-                {number: '23', name: 'KAUÃ BRYAN MAZARIO BARBEIRO'},
-                {number: '25', name: 'KAUAN ALAMBERT GOMES DE SOUSA'},
-                {number: '26', name: 'KEMILLY CARVALHO DA FONSECA BRITO'},
-                {number: '27', name: 'KLAIVYN WALLAS ARAUJO ESPIRITO SANTO'},
-                {number: '28', name: 'LORHANNY CAVALCANTE SANTOS'},
-                {number: '29', name: 'MANUELLA LELIS DA SILVA SIMAO'},
-                {number: '33', name: 'MONALISA DOS SANTOS BALDUINO'},
-                {number: '34', name: 'NATHAN SANTANA MONTEMOR'},
-                {number: '35', name: 'NICOLAS PYETRO CASTRO DE ALMEIDA SOUZA'},
-                {number: '36', name: 'NICOLLAS JHAMAL DA SILVA ALVES'},
-                {number: '37', name: 'SARAH SILVA ROGER'},
-                {number: '38', name: 'SERGIO RICARDO SILVA DE SOUZA'},
-                {number: '40', name: 'VINICIUS COSTA SILVA'},
-                {number: '41', name: 'VITÓRIA SILVA VIEIRA'},
-                {number: '42', name: 'FELIPE RITIELLI NEVES DA SILVA'},
-                {number: '43', name: 'JAQUELYNE PEREIRA GONCALVES'},
-                {number: '44', name: 'KRYSTOFER LEITE DA SILVA'}
+            '1ºH': [
+                {number: '1', name: 'ALEXANDRE BATISTA DOS SANTOS'},
+                {number: '5', name: 'ANA LÍVIA BRAGA DOS SANTOS'},
+                {number: '7', name: 'ARTHUR CASTRO SILVA'},
+                {number: '11', name: 'DANIELLE OLIVEIRA DA SILVA NUNES'},
+                {number: '14', name: 'ELOYSA ANDRADE OLIVEIRA SILVA'},
+                {number: '18', name: 'FELIPE MARCONDES SILVA'},
+                {number: '19', name: 'GEOVANA FERREIRA DA SILVA'},
+                {number: '20', name: 'GEOVANNA GABRIELA PIERRE SILVA'},
+                {number: '23', name: 'GUILHERME YORE DA SILVA OLIVEIRA'},
+                {number: '24', name: 'ISAAK ALVAREZ MARQUEZ CAETANO'},
+                {number: '30', name: 'KAMILA NEVES BRITO'},
+                {number: '33', name: 'KEMILLY VITORIA RODRIGUES MARIANO'},
+                {number: '34', name: 'LAURA LUIZA DOS SANTOS ALMEIDA'},
+                {number: '37', name: 'MARIA EDUARDA VENCESLAU DE SOUZA'},
+                {number: '38', name: 'MATHEUS CAVALCANTE LISBOA'},
+                {number: '40', name: 'MURILLO SOUZA RODRIGUES DOS SANTOS'},
+                {number: '45', name: 'PEDRO HENRIQUE MAURICIO DA SILVA CHAGAS'},
+                {number: '48', name: 'RHUAN LIMA OLIVEIRA'},
+                {number: '49', name: 'THAINA FIDELIS XAVIER DA SILVA'},
+                {number: '53', name: 'YUSSEF CARLITO BELENTANI DE SOUSA'},
+                {number: '54', name: 'DENIS CASTRO DURVALDO'},
+                {number: '58', name: 'RAYSSA GUBEREV FRAGA'},
+                {number: '59', name: 'LEONARDO ABADE DA SILVA DANTAS'},
+                {number: '60', name: 'LAIS VITORIA GOMES PEREIRA'},
+                {number: '61', name: 'MILENA CRISTINA LOPES DE CARVALHO'},
+                {number: '62', name: 'PYETRA GOMES MARTINS'},
+                {number: '65', name: 'FLÁVIO GUSTAVO CUNHA DE SOUZA'},
+                {number: '66', name: 'STELLA MARTINS DA SILVA'}
             ]
         };
 
-        // Respostas corretas atualizadas
+        // Respostas corretas
         const correctAnswers = {
-            q1: "c",
-            q2: "b",
-            q3: "b",
-            q4: "b",
-            q5: "c",
-            q6: "c",
-            q7: "b",
-            q8: "b",
-            q9: "b",
-            q10: "b"
+            q1: "c", q2: "b", q3: "b", q4: "b", 
+            q5: "c", q6: "c", q7: "b", q8: "b", 
+            q9: "b", q10: "b"
         };
 
         function previewImage(input, previewId) {
@@ -721,12 +654,15 @@
             }
             
             let score = 0;
-            const totalQuestions = Object.keys(correctAnswers).length;
+            const totalQuestions = 10;
+            const respostas = {};
             
-            // Verificar respostas
+            // Coletar respostas e verificar
             for (let i = 1; i <= totalQuestions; i++) {
-                const questionName = 'q' + i;
+                const questionName = `q${i}`;
                 const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+                
+                respostas[questionName] = selectedOption ? selectedOption.value : null;
                 
                 if (selectedOption && selectedOption.value === correctAnswers[questionName]) {
                     score++;
@@ -734,6 +670,7 @@
             }
             
             const percentage = Math.round((score / totalQuestions) * 100);
+            const dataEnvio = new Date().toLocaleString('pt-BR');
             
             document.getElementById('result').innerHTML = `
                 <p>${nome}, você acertou ${score} de ${totalQuestions} questões (${percentage}%).</p>
@@ -742,36 +679,41 @@
             document.getElementById('submit-btn').disabled = true;
             
             // Enviar para o Google Sheets
-            sendToGoogleSheets(nome, numero, serie, score, totalQuestions, percentage);
+            sendToGoogleSheets(nome, numero, serie, score, totalQuestions, percentage, respostas, dataEnvio);
         }
 
-        function sendToGoogleSheets(nome, numero, serie, acertos, total, porcentagem) {
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbwO5rYiF_9MeDL5LAUm1EAJ5H1QPjVITDuFW_u9CiTwxhZDdeIg8_JsAIzjNpAHYFNG/exec';
+        function sendToGoogleSheets(nome, numero, serie, acertos, total, porcentagem, respostas, dataEnvio) {
+            const scriptURL = 'SUA_URL_DO_APPS_SCRIPT_AQUI';
             
             const data = {
-                spreadsheetId: '1y4YhG8LOsugxyGNK2_epLL-NP28b9tZh9soUV8A7-u8',
                 nome: nome,
                 numero: numero,
                 serie: serie,
                 acertos: acertos,
                 total: total,
                 porcentagem: porcentagem,
-                data: new Date().toLocaleDateString('pt-BR')
+                respostas: JSON.stringify(respostas),
+                data: dataEnvio
             };
 
             fetch(scriptURL, {
                 method: 'POST',
-                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data)
             })
+            .then(response => response.json())
+            .then(result => {
+                if (result.status === 'success') {
+                    document.getElementById('result').innerHTML += `<p>Respostas salvas com sucesso!</p>`;
+                } else {
+                    document.getElementById('result').innerHTML += `<p style="color: red;">Erro ao salvar: ${result.message}</p>`;
+                }
+            })
             .catch(error => {
                 console.error('Erro:', error);
-                document.getElementById('result').innerHTML += `
-                    <p style="color: red;">Erro ao enviar dados. Por favor, informe o professor.</p>
-                `;
+                document.getElementById('result').innerHTML += `<p style="color: red;">Erro de conexão. Tente novamente.</p>`;
             });
         }
     </script>
