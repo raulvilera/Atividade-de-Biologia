@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATIVIDADE DE BIOLOGIA - 1º H</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            background: linear-gradient(to bottom, #006400, #000000);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #004aad;
+            background: linear-gradient(to right, #87CEFA, #C0C0C0);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .form-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+            background: linear-gradient(to right, #87CEFA, #C0C0C0);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            align-items: flex-end;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group-nome {
+            flex: 3;
+            min-width: 300px;
+        }
+        
+        .form-group-numero {
+            width: 80px;
+        }
+        
+        .form-group-data {
+            width: 150px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #004aad;
+            font-size: 16px;
+        }
+        
+        select, input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .question {
+            background: linear-gradient(to right, #87CEFA, #C0C0C0);
+            margin-bottom: 30px;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 8px 8px 15px rgba(0,0,0,0.15), -3px 0 8px rgba(0,0,0,0.1);
+            border-left: 4px solid #004aad;
+            border-bottom: 4px solid #004aad;
+            position: relative;
+        }
+        
+        .question:before {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: -8px;
+            right: 8px;
+            top: 8px;
+            background: rgba(0,0,0,0.05);
+            z-index: -1;
+            border-radius: 8px;
+        }
+        
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #004aad;
+            font-size: 16px;
+        }
+        
+        .image-upload-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .preview-image {
+            max-width: 100%;
+            max-height: 300px;
+            margin-top: 15px;
+            border-radius: 6px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            border: 1px solid #ddd;
+            display: none;
+        }
+        
+        .options {
+            margin-left: 0;
+        }
+        
+        .option {
+            margin-bottom: 12px;
+            padding: 12px;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .option input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+        
+        .option:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .correct {
+            background-color: #d4edda;
+        }
+        
+        .incorrect {
+            background-color: #f8d7da;
+        }
+        
+        button {
+            display: block;
+            margin: 30px auto;
+            padding: 12px 30px;
+            background-color: #004aad;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        button:hover {
+            background-color: #003882;
+        }
+        
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        #result {
+            text-align: center;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 4px;
+            background-color: #e7f3ff;
+            font-size: 16px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .discursive {
+            margin-top: 20px;
+            background-color: white;
+            padding: 15px;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1><strong>E.E.LYDIA KITZ MOREIRA</strong></h1>
+        <div class="form-container">
+            <div class="form-group form-group-nome">
+                <label>NOME:</label>
+                <select id="alunos" onchange="preencherNumero()">
+                    <option value="">Selecione seu nome</option>
+                    <!-- 9º Ano A -->
+                    <option value="1" data-grade="1ºH">ALEXANDRE BATISTA DOS SANTOS
+</option>
+                    <option value="5" data-grade="9A">ANA LÍVIA BRAGA DOS SANTOS</option>
+                    <option value="7" data-grade="9A">ARTHUR CASTRO SILVA</option>
+                    <option value="11" data-grade="9A">DANIELLE OLIVEIRA DA SILVA NUNES</option>
+                    <option value="14" data-grade="9A">ELOYSA ANDRADE OLIVEIRA SILVA</option>
+                    <option value="18" data-grade="9A">FELIPE MARCONDES SILVA</option>
+                    <option value="19" data-grade="9A">GEOVANA FERREIRA DA SILVA</option>
+                    <option value="20" data-grade="9A">GEOVANNA GABRIELA PIERRE SILVA</option>
+                    <option value="23" data-grade="9A">GUILHERME YORE DA SILVA OLIVEIRA</option>
+                    <option value="24" data-grade="9A">ISAAK ALVAREZ MARQUEZ CAETANO</option>
+                    <option value="30" data-grade="9A">KAMILA NEVES BRITO</option>
+                    <option value="33" data-grade="9A">KEMILLY VITORIA RODRIGUES MARIANO</option>
+                    <option value="34" data-grade="9A">LAURA LUIZA DOS SANTOS ALMEIDA</option>
+                    <option value="37" data-grade="9A">MARIA EDUARDA VENCESLAU DE SOUZA</option>
+                    <option value="38" data-grade="9A">MATHEUS CAVALCANTE LISBOA</option>
+                    <option value="40" data-grade="9A">MURILLO SOUZA RODRIGUES DOS SANTOS</option>
+                    <option value="45" data-grade="9A">PEDRO HENRIQUE MAURICIO DA SILVA CHAGAS</option>
+                    <option value="48" data-grade="9A">RHUAN LIMA OLIVEIRA</option>
+                    <option value="49" data-grade="9A">THAINA FIDELIS XAVIER DA SILVA</option>
+                    <option value="53" data-grade="9A">YUSSEF CARLITO BELENTANI DE SOUSA</option>
+                    <option value="54" data-grade="9A">DENIS CASTRO DURVALDO</option>
+                    <option value="58" data-grade="9A">RAYSSA GUBEREV FRAGA</option>
+                    <option value="59" data-grade="9A">LEONARDO ABADE DA SILVA DANTAS</option>
+                    <option value="60" data-grade="9A">LAIS VITORIA GOMES PEREIRA</option>
+                    <option value="61" data-grade="9A">MILENA CRISTINA LOPES DE CARVALHO</option>
+                    <option value="62" data-grade="9A">PYETRA GOMES MARTINS</option>
+                    <option value="65" data-grade="9A">FLÁVIO GUSTAVO CUNHA DE SOUZA</option>
+                    <option value="66" data-grade="9A">STELLA MARTINS DA SILVA</option>
+                    
+                    <option value="67" data-grade="9B">DYESSICA MAYARA DOS SANTOS GOMES</option>
+                    <option value="68" data-grade="9B">LARISSA DE LOURDES DOS SANTOS</option>
+                                    </select>
+            </div>
+            
+            <div class="form-group form-group-numero">
+                <label>N°:</label>
+                <input type="text" id="numero" readonly>
+            </div>
+            
+            <div class="form-group">
+                <label>SÉRIE:</label>
+                <select id="serie">
+                    <option value="9A">1°H</option>
+                                    </select>
+            </div>
+            
+            <div class="form-group form-group-data">
+                <label>DATA:</label>
+                <input type="date" id="data">
+            </div>
+        </div>
+        <h2><strong>ATIVIDADE DE BIOLOGIA (2° BIMESTRE)</strong></h2>
+    </div>
+
+    <div id="questions">
+        <!-- Questão 1 - Efeito estufa -->
+        <div class="question">
+            <div class="question-text">1. O gráfico abaixo mostra a variação histórica da concentração de CO₂ na atmosfera (em ppm) e a temperatura média global (em °C) entre 1850 e 2020. A manutenção do efeito estufa natural é essencial para a vida na Terra. Contudo, alterações antrópicas nesse processo têm causado desequilíbrios. Considerando o gráfico e o fenômeno do efeito estufa, a principal consequência do aumento acelerado de CO₂ a partir do século XX é:</div>
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjCJFUBpWIES5d0otxSuWY8IcQuZeF1u3UT44yRQrgZC-MWslQEuQs-KB7FsVyCLP6R8tuCsonSOvSfW-YHPU5l6HXLfO4-Fxm7wMTc2UoaVtQUu8qeB0vwMUzIQ-NbWRfb9PAxHgRZwZykqL3Nuoq0dWh05V34dakXpCzKps04BLuDKBkA12YmXfJiLY15/s960/Captura%20de%20tela%202025-06-10%20151200.png" alt="Girl in a jacket" width="800" height="300">
+            <div class="image-upload-container">
+                <input type="file" id="upload-q1" accept="image/*" style="display: none;" onchange="previewImage(this, 'preview-q1')">
+                <img id="preview-q1" class="preview-image" alt="Pré-visualização da imagem">
+            </div>
+            
+            <div class="options">
+                <label class="option">
+                    <input type="radio" name="q1" value="a"> 
+                    a) Intensificação da fotossíntese vegetal, aumentando a produção agrícola global.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q1" value="b"> 
+                    b) Redução da camada de ozônio, elevando a incidência de raios UV na superfície.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q1" value="c"> 
+                    c) Elevação da temperatura média do planeta, devido à maior retenção de calor na atmosfera.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q1" value="d"> 
+                    d) Aumento da salinização dos oceanos, afetando ecossistemas marinhos.
+                </label>
+            </div>
+        </div>
+
+        <!-- Questão 2 - Efeito estufa -->
+        <div class="question">
+            <div class="question-text">2. Um texto descreve o papel do vapor d’água, metano (CH₄) e dióxido de carbono (CO₂) na regulação térmica terrestre. Cientistas alertam que, sem o efeito estufa natural, a temperatura média da Terra seria -18°C, inviabilizando a vida. Se o efeito estufa natural fosse totalmente eliminado, a consequência imediata seria:</div>
+            
+            <div class="image-upload-container">
+                <input type="file" id="upload-q2" accept="image/*" style="display: none;" onchange="previewImage(this, 'preview-q2')">
+                <img id="preview-q2" class="preview-image" alt="Pré-visualização da imagem">
+            </div>
+            
+            <div class="options">
+                <label class="option">
+                    <input type="radio" name="q2" value="a"> 
+                    a) Congelamento dos oceanos e extinção em massa de espécies.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q2" value="b"> 
+                    b) Queda brusca da temperatura global, inviabilizando a sobrevivência da maioria das formas de vida.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q2" value="c"> 
+                    c) Aumento da radiação solar refletida, resfriando ainda mais o planeta.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q2" value="d"> 
+                    d) Acidificação dos solos, comprometendo a agricultura.
+                </label>
+            </div>
+        </div>
+
+        <!-- Questão 3 - Eventos climáticos extremos -->
+        <div class="question">
+            <div class="question-text">3. Em 2023, o ciclone Yakecan atingiu o sul do Brasil, com ventos de 150 km/h e chuvas torrenciais. Estudos vinculam o aumento da intensidade de ciclones extratropicais ao aquecimento dos oceanos. Nesse cenário, o fator climático diretamente associado à maior energia desses eventos é:</div>
+            
+            <div class="image-upload-container">
+                <input type="file" id="upload-q3" accept="image/*" style="display: none;" onchange="previewImage(this, 'preview-q3')">
+                <img id="preview-q3" class="preview-image" alt="Pré-visualização da imagem">
+            </div>
+            
+            <div class="options">
+                <label class="option">
+                    <input type="radio" name="q3" value="a"> 
+                    a) Elevação do nível do mar, inundando zonas costeiras.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q3" value="b"> 
+                    b) Aumento da temperatura da superfície do mar, fornecendo mais umidade e calor.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q3" value="c"> 
+                    c) Desertificação de biomas, alterando padrões de vento.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q3" value="d"> 
+                    d) Derretimento de geleiras, reduzindo a salinidade oceânica.
+                </label>
+            </div>
+        </div>
+
+        <!-- Questão 4 - Eventos climáticos extremos -->
+        <div class="question">
+            <div class="question-text">4. Um relatório do IPCC (2022) aponta que secas prolongadas no Nordeste brasileiro estão mais frequentes e intensas, com impactos na segurança hídrica e alimentar. Essa mudança no padrão de secas está primariamente relacionada a:</div>
+            
+            <div class="image-upload-container">
+                <input type="file" id="upload-q4" accept="image/*" style="display: none;" onchange="previewImage(this, 'preview-q4')">
+                <img id="preview-q4" class="preview-image" alt="Pré-visualização da imagem">
+            </div>
+            
+            <div class="options">
+                <label class="option">
+                    <input type="radio" name="q4" value="a"> 
+                    a) Desmatamento da Amazônia, que reduz o transporte de umidade para outras regiões.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q4" value="b"> 
+                    b) Alterações no ciclo hidrológico global, com mudanças na distribuição de chuvas.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q4" value="c"> 
+                    c) Superexploração de aquíferos, esgotando reservas subterrâneas.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q4" value="d"> 
+                    d) Expansão da pecuária, compactando solos e reduzindo infiltração.
+                </label>
+            </div>
+        </div>
+
+        <!-- Questão 5 - ERRD -->
+        <div class="question">
+            <div class="question-text">5. Após enchentes em Petrópolis (RJ), um projeto de Educação para Redução de Riscos e Desastres (ERRD) em escolas ensinou alunos a mapear áreas de risco, montar kits de emergência e criar rotas de fuga. A principal contribuição dessa iniciativa para a resiliência comunitária é:</div>
+            
+            <div class="image-upload-container">
+                <input type="file" id="upload-q5" accept="image/*" style="display: none;" onchange="previewImage(this, 'preview-q5')">
+                <img id="preview-q5" class="preview-image" alt="Pré-visualização da imagem">
+            </div>
+            
+            <div class="options">
+                <label class="option">
+                    <input type="radio" name="q5" value="a"> 
+                    a) Substituir a infraestrutura pública deficiente por ações individuais.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q5" value="b"> 
+                    b) Transferir para as escolas a responsabilidade pela defesa civil.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q5" value="c"> 
+                    c) Empoderar a população com conhecimentos para prevenir e responder a desastres.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q5" value="d"> 
+                    d) Concentrar recursos financeiros em regiões historicamente afetadas.
+                </label>
+            </div>
+        </div>
+
+        <!-- Questão 6 - ERRD -->
+        <div class="question">
+            <div class="question-text">6. A Figura mostra um mapa de risco de deslizamentos em uma cidade serrana. Legenda: ● Áreas de alto risco (encostas íngremes + ocupação irregular). Uma ação de ERRD fundamental para habitantes da zona de alto risco é:</div>
+            
+            <div class="image-upload-container">
+                <input type="file" id="upload-q6" accept="image/*" style="display: none;" onchange="previewImage(this, 'preview-q6')">
+                <img id="preview-q6" class="preview-image" alt="Pré-visualização da imagem">
+            </div>
+            
+            <div class="options">
+                <label class="option">
+                    <input type="radio" name="q6" value="a"> 
+                    a) Construir muros de concreto em todas as encostas.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q6" value="b"> 
+                    b) Realizar queimadas controladas para reduzir a vegetação.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q6" value="c"> 
+                    c) Implementar sistemas de alerta precoce e evacuação organizada.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q6" value="d"> 
+                    d) Promover a impermeabilização total do solo urbano.
+                </label>
+            </div>
+        </div>
+
+        <!-- Questão 7 - Fontes renováveis -->
+        <div class="question">
+            <div class="question-text">7. O Brasil possui 83% de sua matriz elétrica baseada em renováveis, com destaque para hidrelétricas (63,8%) e crescimento de eólica (10,9%) e solar (2,6%) (EPE, 2023). Apesar da vantagem ambiental, um desafio para consolidar eólica e solar como bases da matriz é:</div>
+            
+            <div class="image-upload-container">
+                <input type="file" id="upload-q7" accept="image/*" style="display: none;" onchange="previewImage(this, 'preview-q7')">
+                <img id="preview-q7" class="preview-image" alt="Pré-visualização da imagem">
+            </div>
+            
+            <div class="options">
+                <label class="option">
+                    <input type="radio" name="q7" value="a"> 
+                    a) Emissão de metano por painéis fotovoltaicos em decomposição.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q7" value="b"> 
+                    b) Intermitência na geração, dependendo de condições climáticas.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q7" value="c"> 
+                    c) Conflitos com terras indígenas para instalação de parques.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q7" value="d"> 
+                    d) Alto custo de transmissão em comparação com termelétricas.
+                </label>
+            </div>
+        </div>
+
+        <!-- Questão 8 - Fontes renováveis -->
+        <div class="question">
+            <div class="question-text">8. Uma usina de biomassa utiliza bagaço de cana para gerar energia. Estudos mostram que, para cada tonelada de cana processada, 250 kg de bagaço produzem 150 kWh. Essa fonte energética é considerada renovável porque:</div>
+            
+            <div class="image-upload-container">
+                <input type="file" id="upload-q8" accept="image/*" style="display: none;" onchange="previewImage(this, 'preview-q8')">
+                <img id="preview-q8" class="preview-image" alt="Pré-visualização da imagem">
+            </div>
+            
+            <div class="options">
+                <label class="option">
+                    <input type="radio" name="q8" value="a"> 
+                    a) Reduz o consumo de água na irrigação dos canaviais.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q8" value="b"> 
+                    b) Utiliza resíduos agrícolas, reaproveitando matéria orgânica.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q8" value="c"> 
+                    c) Elimina a necessidade de fertilizantes na lavoura.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q8" value="d"> 
+                    d) Não emite CO₂ durante a combustão do bagaço.
+                </label>
+            </div>
+        </div>
+
+        <!-- Questão 9 - Fontes não renováveis -->
+        <div class="question">
+            <div class="question-text">9. O gás natural é considerado uma "energia de transição" na descarbonização. A tabela compara emissões (kg CO₂/GJ):<br>
+                | Fonte      | Emissões |<br>
+                |------------|----------|<br>
+                | Carvão     | 95       |<br>
+                | Gás Natural| 55       |<br>
+                | Solar      | 0        |<br>
+                Mesmo sendo menos poluente que carvão, o gás natural ainda é problemático porque:</div>
+            
+            <div class="image-upload-container">
+                <input type="file" id="upload-q9" accept="image/*" style="display: none;" onchange="previewImage(this, 'preview-q9')">
+                <img id="preview-q9" class="preview-image" alt="Pré-visualização da imagem">
+            </div>
+            
+            <div class="options">
+                <label class="option">
+                    <input type="radio" name="q9" value="a"> 
+                    a) Sua extração por fracking contamina aquíferos, sem relação com emissões.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q9" value="b"> 
+                    b) Contribui para o efeito estufa, embora em menor escala que outras fósseis.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q9" value="c"> 
+                    c) Impede investimentos em eólica, por ser mais barato.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q9" value="d"> 
+                    d) É inesgotável, desincentivando a busca por renováveis.
+                </label>
+            </div>
+        </div>
+
+        <!-- Questão 10 - Fontes não renováveis -->
+        <div class="question">
+            <div class="question-text">10. O pré-sal brasileiro responde por 73% da produção nacional de petróleo. Acidentes em plataformas, como vazamentos, geram impactos ambientais de longo prazo. Além dos danos ecológicos, a exploração do pré-sal representa uma contradição porque:</div>
+            
+            <div class="image-upload-container">
+                <input type="file" id="upload-q10" accept="image/*" style="display: none;" onchange="previewImage(this, 'preview-q10')">
+                <img id="preview-q10" class="preview-image" alt="Pré-visualização da imagem">
+            </div>
+            
+            <div class="options">
+                <label class="option">
+                    <input type="radio" name="q10" value="a"> 
+                    a) O Brasil possui potencial para ser líder mundial em energia solar.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q10" value="b"> 
+                    b) Compromete metas de redução de emissões, ao priorizar fontes fósseis.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q10" value="c"> 
+                    c) Exige tecnologia importada, onerando a balança comercial.
+                </label>
+                <label class="option">
+                    <input type="radio" name="q10" value="d"> 
+                    d) Suas reservas são inesgotáveis, contrariando o conceito de não renovabilidade.
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <button id="submit-btn" onclick="submitForm()">Enviar Respostas</button>
+    <div id="result"></div>
+
+    <script>
+        // Dados dos alunos por série
+        const studentsData = {
+            '9A': [
+                {number: '1', name: 'ÁGATHA NIKOLLE DA SILVA RAMOS'},
+                {number: '2', name: 'AMANDA BEATRIZ LEAL MOURAD'},
+                {number: '4', name: 'ANNA NICOLY BENVINDO DOS SANTOS'},
+                {number: '5', name: 'ARTHUR DOS SANTOS'},
+                {number: '6', name: 'BEATRIZ UCHOA DOS SANTOS'},
+                {number: '7', name: 'BRUNO EDUARDO NOGUEIRA DE OLIVEIRA'},
+                {number: '8', name: 'CARLOS EDUARDO BELMIRO DOS SANTOS'},
+                {number: '9', name: 'CHRISTIAN DAVI DE OLIVEIRA'},
+                {number: '11', name: 'ERICK HENRIQUE RIBEIRO GONÇALVES'},
+                {number: '12', name: 'FILIPE RODRIGUES SANTOS'},
+                {number: '13', name: 'GABRIEL ALMEIDA MOSCARDINI'},
+                {number: '14', name: 'GIOVANA MOTA VAZ DE JESUS'},
+                {number: '15', name: 'GUILHERME DA SILVA GUIMARÃES'},
+                {number: '16', name: 'HELOÍSA LEAL DOS REIS'},
+                {number: '17', name: 'IAGO ANJOS DE JESUS'},
+                {number: '18', name: 'IGNACIO LINS SANTOS'},
+                {number: '19', name: 'ISADORA DE SOUZA SILVA'},
+                {number: '20', name: 'JOAO VICTOR BATISTA DUARTE'},
+                {number: '21', name: 'JULIANA SANTOS LIMA'},
+                {number: '25', name: 'MANUELA VITÓRIA LIMA DOS SANTOS'},
+                {number: '26', name: 'MIGUEL ALVES OLIVEIRA'},
+                {number: '27', name: 'NIKOLAS ANTONIO'},
+                {number: '28', name: 'ORIANA JOSE TUAREZ RENGEL'},
+                {number: '31', name: 'RAFAELLA VITÓRIA EXPEDITA DE ANDRADE MARQUES'},
+                {number: '33', name: 'RAYLAN DE JESUS BARBOSA'},
+                {number: '34', name: 'REBECA DOS SANTOS SOUSA'},
+                {number: '35', name: 'RICHARD JOSÉ DOS SANTOS'},
+                {number: '36', name: 'SARA CRISTINA PASSOS MARTINS'},
+                {number: '37', name: 'VANESSA CARDOSO DOS SANTOS'},
+                {number: '41', name: 'JULIA DIAS AZEVEDO'},
+                {number: '42', name: 'SAMARA HELEN DA SILVA'},
+                {number: '44', name: 'LUIS MATHEUS DA SILVA RAMOS'}
+            ],
+            '9B': [
+                {number: '1', name: 'ALEJANDRO VIEIRA LIMA'},
+                {number: '2', name: 'ALEX GUSTAVO DA SILVA VIEIRA'},
+                {number: '3', name: 'ALLAN BEZERRA DE LIMA'},
+                {number: '6', name: 'ARTHUR DE JESUS NASCIMENTO'},
+                {number: '8', name: 'ARTHUR MARYANO MENDES'},
+                {number: '9', name: 'CARLOS EDUARDO OLIVEIRA SABATERRA'},
+                {number: '10', name: 'DARYO PALMA GREGORIO'},
+                {number: '13', name: 'EDUARDA DE SOUSA OLIVEIRA'},
+                {number: '16', name: 'GIOVANNA MARTINEZ FERREIRA'},
+                {number: '17', name: 'GRAZIELLE VITÓRIA SILVA FIGUEIREDO'},
+                {number: '20', name: 'JULLIA OLIVEIRA DE SOUZA'},
+                {number: '21', name: 'KARINA DE JESUS SANTANA'},
+                {number: '24', name: 'LEONARDO JUNIOR ALBUQUERQUE DA SILVA'},
+                {number: '27', name: 'MARCOS DE OLIVEIRA CARVALHO'},
+                {number: '28', name: 'MARIA EDUARDA SILVA SOUZA'},
+                {number: '29', name: 'MOISES DOS SANTOS BOMFIM'},
+                {number: '30', name: 'NAHYMÊ VITORIA TAVARES DOS SANTOS'},
+                {number: '31', name: 'NICOLAS LUAN MENDES'},
+                {number: '32', name: 'PEDRO HENRIQUE ARRABAL MANZARO'},
+                {number: '33', name: 'PIETRO RAMON DE PAIVA MAGALHÃES LEITÃO'},
+                {number: '34', name: 'SOFIA DE FRANCA COSTA'},
+                {number: '35', name: 'TATIANA DA SILVA RODRIGUES'},
+                {number: '36', name: 'VITOR HUGO DOMINGOS SANTOS'},
+                {number: '37', name: 'WAGNER SILVA MEIRA'},
+                {number: '38', name: 'YASMIM ANDRADE DOS SANTOS'}
+            ],
+            '9C': [
+                {number: '2', name: 'ALEXANDRE SERAFIM JUNIOR'},
+                {number: '3', name: 'ANA LUIZA DO NASCIMENTO'},
+                {number: '5', name: 'ARTHUR EMANUEL ALMEIDA REIS'},
+                {number: '7', name: 'CARLOS AUGUSTO DIAS DE MENDONÇA'},
+                {number: '9', name: 'DAPHINE SINDIFER RODRIGUES SILVA'},
+                {number: '12', name: 'ELOISA DE OLIVEIRA CARVALHO'},
+                {number: '13', name: 'ENZO BAPTISTA MAIA'},
+                {number: '14', name: 'EVELLYN ANGELINA CAVALCANTE DE OLIVEIRA'},
+                {number: '16', name: 'GABRIEL VICTOR OLIVEIRA SANTOS'},
+                {number: '17', name: 'GIOVANNA SOUSA DA SILVA'},
+                {number: '18', name: 'GUSTAVO FURLAN GUEDES DA SILVA'},
+                {number: '23', name: 'KAUÃ BRYAN MAZARIO BARBEIRO'},
+                {number: '25', name: 'KAUAN ALAMBERT GOMES DE SOUSA'},
+                {number: '26', name: 'KEMILLY CARVALHO DA FONSECA BRITO'},
+                {number: '27', name: 'KLAIVYN WALLAS ARAUJO ESPIRITO SANTO'},
+                {number: '28', name: 'LORHANNY CAVALCANTE SANTOS'},
+                {number: '29', name: 'MANUELLA LELIS DA SILVA SIMAO'},
+                {number: '33', name: 'MONALISA DOS SANTOS BALDUINO'},
+                {number: '34', name: 'NATHAN SANTANA MONTEMOR'},
+                {number: '35', name: 'NICOLAS PYETRO CASTRO DE ALMEIDA SOUZA'},
+                {number: '36', name: 'NICOLLAS JHAMAL DA SILVA ALVES'},
+                {number: '37', name: 'SARAH SILVA ROGER'},
+                {number: '38', name: 'SERGIO RICARDO SILVA DE SOUZA'},
+                {number: '40', name: 'VINICIUS COSTA SILVA'},
+                {number: '41', name: 'VITÓRIA SILVA VIEIRA'},
+                {number: '42', name: 'FELIPE RITIELLI NEVES DA SILVA'},
+                {number: '43', name: 'JAQUELYNE PEREIRA GONCALVES'},
+                {number: '44', name: 'KRYSTOFER LEITE DA SILVA'}
+            ]
+        };
+
+        // Respostas corretas atualizadas
+        const correctAnswers = {
+            q1: "c",
+            q2: "b",
+            q3: "b",
+            q4: "b",
+            q5: "c",
+            q6: "c",
+            q7: "b",
+            q8: "b",
+            q9: "b",
+            q10: "b"
+        };
+
+        function previewImage(input, previewId) {
+            const preview = document.getElementById(previewId);
+            const file = input.files[0];
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function preencherNumero() {
+            const selectAluno = document.getElementById('alunos');
+            const inputNumero = document.getElementById('numero');
+            const selectSerie = document.getElementById('serie');
+            
+            if (selectAluno.value) {
+                const selectedOption = selectAluno.options[selectAluno.selectedIndex];
+                inputNumero.value = selectedOption.value;
+                selectSerie.value = selectedOption.getAttribute('data-grade');
+            } else {
+                inputNumero.value = '';
+            }
+        }
+
+        // Configurar data atual
+        document.getElementById('data').valueAsDate = new Date();
+
+        function submitForm() {
+            const alunoSelect = document.getElementById('alunos');
+            const nome = alunoSelect.options[alunoSelect.selectedIndex].text;
+            const numero = document.getElementById('numero').value;
+            const serie = document.getElementById('serie').value;
+            
+            if (!alunoSelect.value) {
+                alert('Por favor, selecione seu nome na lista.');
+                return;
+            }
+            
+            let score = 0;
+            const totalQuestions = Object.keys(correctAnswers).length;
+            
+            // Verificar respostas
+            for (let i = 1; i <= totalQuestions; i++) {
+                const questionName = 'q' + i;
+                const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+                
+                if (selectedOption && selectedOption.value === correctAnswers[questionName]) {
+                    score++;
+                }
+            }
+            
+            const percentage = Math.round((score / totalQuestions) * 100);
+            
+            document.getElementById('result').innerHTML = `
+                <p>${nome}, você acertou ${score} de ${totalQuestions} questões (${percentage}%).</p>
+            `;
+            
+            document.getElementById('submit-btn').disabled = true;
+            
+            // Enviar para o Google Sheets
+            sendToGoogleSheets(nome, numero, serie, score, totalQuestions, percentage);
+        }
+
+        function sendToGoogleSheets(nome, numero, serie, acertos, total, porcentagem) {
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbwO5rYiF_9MeDL5LAUm1EAJ5H1QPjVITDuFW_u9CiTwxhZDdeIg8_JsAIzjNpAHYFNG/exec';
+            
+            const data = {
+                spreadsheetId: '1y4YhG8LOsugxyGNK2_epLL-NP28b9tZh9soUV8A7-u8',
+                nome: nome,
+                numero: numero,
+                serie: serie,
+                acertos: acertos,
+                total: total,
+                porcentagem: porcentagem,
+                data: new Date().toLocaleDateString('pt-BR')
+            };
+
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                document.getElementById('result').innerHTML += `
+                    <p style="color: red;">Erro ao enviar dados. Por favor, informe o professor.</p>
+                `;
+            });
+        }
+    </script>
+</body>
+</html>
